@@ -17,8 +17,6 @@
 }
 
 body {
-    display: flex;
-    flex-direction: flex;
     min-height: 100vh;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -196,11 +194,6 @@ th {
 .btn-danger:hover {
     background-color: var(--danger-color);
     color: #fff;
-}
-
-
-main {
-    flex: 0.5;
 }
 
 .footer {
