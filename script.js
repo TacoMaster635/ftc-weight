@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const libraryTbody = document.getElementById('library-tbody');
     const manifestTbody = document.getElementById('manifest-tbody');
     const totalWeightEl = document.getElementById('total-weight');
+    const totalWeightLbsEl = document.getElementById('total-weight-lbs'); // Added pounds element
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
-    // Fallback data in case the external script path fails to load locally
     const fallbackParts = [
         { name: "goBILDA 5203 Series Yellow Jacket Motor", weight: 215.5, type: "Motor", manufacturer: "goBILDA" },
         { name: "goBILDA 96mm Mecanum Wheel Set", weight: 440.0, type: "Drivetrain", manufacturer: "goBILDA" },
@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "REV Control Hub", weight: 142.0, type: "Electronics", manufacturer: "REV Robotics" }
     ];
 
-    // Pulls from external gobilda.js file, or uses fallback if undefined
     const libraryParts = (window.gobildaParts && window.gobildaParts.length > 0) 
         ? window.gobildaParts 
         : fallbackParts;
@@ -46,14 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderManifest() {
         manifestTbody.innerHTML = '';
-        let totalWeight = 0;
+        let totalWeightGrams = 0;
 
         if (robotManifest.length === 0) {
             manifestTbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">No parts added yet</td></tr>`;
         }
 
         robotManifest.forEach((item, index) => {
-            totalWeight += parseFloat(item.weight);
+            totalWeightGrams += parseFloat(item.weight);
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${escapeHtml(item.name)}</td>
@@ -63,7 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
             manifestTbody.appendChild(tr);
         });
 
-        totalWeightEl.textContent = totalWeight.toFixed(1);
+        // Convert grams to pounds (1 lb = 453.592 grams)
+        const totalWeightPounds = totalWeightGrams / 453.592;
+
+        totalWeightEl.textContent = totalWeightGrams.toFixed(1);
+        if (totalWeightLbsEl) {
+            totalWeightLbsEl.textContent = `${totalWeightPounds.toFixed(2)} lbs`;
+        }
     }
 
     window.addPartToManifest = function(name, weight) {
