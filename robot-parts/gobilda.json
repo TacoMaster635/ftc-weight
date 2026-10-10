@@ -1,0 +1,26 @@
+[
+  {
+    "name": "goBILDA 5203 Series Yellow Jacket Motor",
+    "weight": 215.5,
+    "type": "Motor",
+    "manufacturer": "goBILDA"
+  },
+  {
+    "name": "goBILDA FTC Starter Kit Channel (96mm)",
+    "weight": 45.2,
+    "type": "Structure",
+    "manufacturer": "goBILDA"
+  },
+  {
+    "name": "goBILDA Mecanum Wheel (96mm)",
+    "weight": 110.0,
+    "type": "Drivetrain",
+    "manufacturer": "goBILDA"
+  },
+  {
+    "name": "goBILDA 6mm D-Shaft (100mm)",
+    "weight": 21.0,
+    "type": "Hardware",
+    "manufacturer": "goBILDA"
+  }
+]
