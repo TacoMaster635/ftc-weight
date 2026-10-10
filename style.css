@@ -6,6 +6,7 @@
     --text-secondary: #a0a0a0;
     --border-color: #2c2c2c;
     --danger-color: #cf6679;
+    --success-color: #03dac6;
 }
 
 * {
@@ -22,12 +23,12 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -43,7 +44,7 @@ header p {
 .dashboard {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .card {
@@ -53,25 +54,37 @@ header p {
     padding: 20px;
     text-align: center;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .card h2 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--text-secondary);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 #total-weight {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: var(--primary-color);
 }
 
 .unit {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
 section {
@@ -79,62 +92,40 @@ section {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 section h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 15px;
     color: var(--text-color);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 8px;
 }
 
-.form-group {
+.library-controls {
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-input, select {
+input {
     width: 100%;
     padding: 10px;
     background-color: #2a2a2a;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
-input:focus, select:focus {
+input:focus {
     outline: none;
     border-color: var(--primary-color);
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: #121212;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.2s;
-}
-
-.btn-primary:hover {
-    opacity: 0.9;
-}
-
 .table-responsive {
     overflow-x: auto;
+    max-height: 450px;
+    overflow-y: auto;
 }
 
 table {
@@ -144,26 +135,62 @@ table {
 }
 
 th, td {
-    padding: 12px;
+    padding: 10px 12px;
     border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
 }
 
 th {
     color: var(--text-secondary);
     font-weight: 600;
+    background-color: #181818;
+    position: sticky;
+    top: 0;
 }
 
-.btn-delete {
+.btn-add {
+    background-color: var(--success-color);
+    color: #121212;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.btn-add:hover {
+    opacity: 0.9;
+}
+
+.btn-remove {
     background-color: transparent;
     color: var(--danger-color);
     border: 1px solid var(--danger-color);
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
-.btn-delete:hover {
+.btn-remove:hover {
+    background-color: var(--danger-color);
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: transparent;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-danger:hover {
     background-color: var(--danger-color);
     color: #fff;
 }
