@@ -1,3 +1,5 @@
+import { gobildaParts } from '../robot-parts/gobilda.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const libraryTbody = document.getElementById('library-tbody');
     const manifestTbody = document.getElementById('manifest-tbody');
@@ -5,21 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
-    let libraryParts = [];
-    let robotManifest = JSON.parse(localStorage.getItem('ftc_manifest')) || [];
+    // Combine manufacturer lists here as you add more files (e.g., rev.js)
+    const libraryParts = [
+        ...gobildaParts
+    ];
 
-    // Fetch library data from robot-parts/gobilda.json
-    fetch('../robot-parts/gobilda.json')
-        .then(response => response.json())
-        .then(data => {
-            libraryParts = data;
-            renderLibrary(libraryParts);
-            renderManifest();
-        })
-        .catch(err => {
-            console.error('Error loading parts library:', err);
-            libraryTbody.innerHTML = `<tr><td colspan="5" style="color:var(--danger-color); text-align:center;">Failed to load part library JSON file.</td></tr>`;
-        });
+    // Robot build list stored directly in memory (or using standard storage)
+    let robotManifest = [];
+
+    // Initial render
+    renderLibrary(libraryParts);
+    renderManifest();
 
     function renderLibrary(partsToDisplay) {
         libraryTbody.innerHTML = '';
@@ -28,14 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        partsToDisplay.forEach((part, index) => {
+        partsToDisplay.forEach((part) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><strong>${escapeHtml(part.name)}</strong></td>
                 <td><span style="color: var(--primary-color);">${escapeHtml(part.type)}</span></td>
                 <td>${escapeHtml(part.manufacturer)}</td>
                 <td>${parseFloat(part.weight).toFixed(1)} g</td>
-                <td><button class="btn-add" onclick="addPartToManifest(${index})">Add</button></td>
+                <td><button class="btn-add" onclick="window.addPartToManifest('${escapeHtml(part.name)}', ${part.weight})">Add</button></td>
             `;
             libraryTbody.appendChild(tr);
         });
@@ -55,29 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td>${escapeHtml(item.name)}</td>
                 <td>${parseFloat(item.weight).toFixed(1)} g</td>
-                <td><button class="btn-remove" onclick="removePartFromManifest(${index})">X</button></td>
+                <td><button class="btn-remove" onclick="window.removePartFromManifest(${index})">X</button></td>
             `;
             manifestTbody.appendChild(tr);
         });
 
         totalWeightEl.textContent = totalWeight.toFixed(1);
-        localStorage.setItem('ftc_manifest', JSON.stringify(robotManifest));
     }
 
-    // Global scope helper for adding items from the library table
-    window.addPartToManifest = function(libraryIndex) {
-        const part = libraryParts[libraryIndex];
-        if (part) {
-            robotManifest.push({
-                name: part.name,
-                weight: part.weight,
-                type: part.type
-            });
-            renderManifest();
-        }
+    // Expose functions globally for inline onclick HTML handlers
+    window.addPartToManifest = function(name, weight) {
+        robotManifest.push({ name, weight });
+        renderManifest();
     };
 
-    // Global scope helper for removing items from the robot build
     window.removePartFromManifest = function(manifestIndex) {
         robotManifest.splice(manifestIndex, 1);
         renderManifest();
