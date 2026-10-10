@@ -14,9 +14,13 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
 }
 
 body {
+    display: flex;
+    flex-direction: flex;
+    min-height: 100vh;
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 20px;
@@ -193,4 +197,16 @@ th {
 .btn-danger:hover {
     background-color: var(--danger-color);
     color: #fff;
+}
+
+
+main {
+    flex: 1;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    border-top: 1px solid #333;
 }
