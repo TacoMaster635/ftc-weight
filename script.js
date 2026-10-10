@@ -6,15 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
-    const fallbackParts = [
+    const goBILDAParts = [
         { name: "goBILDA 5203 Series Yellow Jacket Motor", weight: 215.5, type: "Motor", manufacturer: "goBILDA" },
         { name: "goBILDA 96mm Mecanum Wheel Set", weight: 440.0, type: "Drivetrain", manufacturer: "goBILDA" },
         { name: "goBILDA Turret Bearing Assembly", weight: 180.0, type: "Turret", manufacturer: "goBILDA" },
         { name: "goBILDA Dual High-Speed Launcher Flywheel", weight: 320.5, type: "Launcher", manufacturer: "goBILDA" },
+    ];
+    const REVParts = [
         { name: "REV Control Hub", weight: 142.0, type: "Electronics", manufacturer: "REV Robotics" }
     ];
 
-    const libraryParts = (fallbackParts
+    const libraryParts = (goBILDAParts + REVParts)
 
     let robotManifest = [];
 
