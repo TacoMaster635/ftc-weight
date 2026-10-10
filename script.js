@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "REV Control Hub", weight: 142.0, type: "Electronics", manufacturer: "REV Robotics" }
     ];
 
-    const libraryParts = (goBILDAParts + REVParts)
+    const libraryParts = (...goBILDAParts,  ...REVParts)
 
     let robotManifest = [];
 
