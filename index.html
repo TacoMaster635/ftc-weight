@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTC Robot Weight Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FTC Robot Weight Calculator</h1>
+            <p>Track your robot subsystems, custom parts, and total weight.</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="card total-card">
+                <h2>Total Robot Weight</h2>
+                <div id="total-weight">0.0</div>
+                <span class="unit">grams (g)</span>
+            </div>
+        </div>
+
+        <section class="add-part-section">
+            <h2>Add Robot Part</h2>
+            <form id="part-form">
+                <div class="form-group">
+                    <label for="part-name">Part Name</label>
+                    <input type="text" id="part-name" required placeholder="e.g., Turret Rotation Motor">
+                </div>
+                <div class="form-group">
+                    <label for="part-weight">Weight (grams)</label>
+                    <input type="number" step="0.1" id="part-weight" required placeholder="e.g., 215.5">
+                </div>
+                <div class="form-group">
+                    <label for="part-category">Subsystem / Category</label>
+                    <select id="part-category">
+                        <option value="Drivetrain">Drivetrain</option>
+                        <option value="Turret">Turret</option>
+                        <option value="Launcher">Launcher</option>
+                        <option value="Intake">Intake</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="part-manufacturer">Manufacturer</label>
+                    <input type="text" id="part-manufacturer" value="goBILDA" placeholder="e.g., goBILDA, REV">
+                </div>
+                <button type="submit" class="btn-primary">Add Part</button>
+            </form>
+        </section>
+
+        <section class="parts-list-section">
+            <h2>Added Robot Parts</h2>
+            <div class="table-responsive">
+                <table id="parts-table">
+                    <thead>
+                        <tr>
+                            <th>Part Name</th>
+                            <th>Subsystem</th>
+                            <th>Manufacturer</th>
+                            <th>Weight (g)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="parts-tbody">
+                        <!-- Dynamic rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
