@@ -1,5 +1,3 @@
-import { gobildaParts } from '../robot-parts/gobilda.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const libraryTbody = document.getElementById('library-tbody');
     const manifestTbody = document.getElementById('manifest-tbody');
@@ -7,15 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
-    // Combine manufacturer lists here as you add more files (e.g., rev.js)
-    const libraryParts = [
-        ...gobildaParts
-    ];
+    // Pulls directly from the global array loaded by robot-parts/gobilda.js
+    const libraryParts = window.gobildaParts || [];
 
-    // Robot build list stored directly in memory (or using standard storage)
     let robotManifest = [];
 
-    // Initial render
     renderLibrary(libraryParts);
     renderManifest();
 
@@ -61,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalWeightEl.textContent = totalWeight.toFixed(1);
     }
 
-    // Expose functions globally for inline onclick HTML handlers
     window.addPartToManifest = function(name, weight) {
         robotManifest.push({ name, weight });
         renderManifest();
@@ -77,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderManifest();
     });
 
-    // Real-time search/filter handler
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
         const filtered = libraryParts.filter(part => 
