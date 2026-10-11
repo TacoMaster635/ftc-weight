@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const libraryTbody = document.getElementById('library-tbody');
     const manifestTbody = document.getElementById('manifest-tbody');
     const totalWeightEl = document.getElementById('total-weight');
-    const totalWeightLbsEl = document.getElementById('total-weight-lbs'); // Added pounds element
+    const totalWeightLbsEl = document.getElementById('total-weight-lbs');
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "REV Control Hub", weight: 142.0, type: "Electronics", manufacturer: "REV Robotics" }
     ];
 
-    const libraryParts = [...goBILDAParts,  ...REVParts]
+    const libraryParts = [...goBILDAParts, ...REVParts];
 
     let robotManifest = [];
 
@@ -48,16 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalWeightGrams = 0;
 
         if (robotManifest.length === 0) {
-            manifestTbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">No parts added yet</td></tr>`;
+            manifestTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No parts added yet</td></tr>`;
         }
 
         robotManifest.forEach((item, index) => {
-            totalWeightGrams += parseFloat(item.weight);
+            const itemTotalWeight = item.weight * item.quantity;
+            totalWeightGrams += itemTotalWeight;
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${escapeHtml(item.name)}</td>
-                <td>${parseFloat(item.weight).toFixed(1)} g</td>
-                <td><button class="btn-remove" onclick="window.removePartFromManifest(${index})">X</button></td>
+                <td>
+                    <button class="btn-qty" onclick="window.decreaseQuantity(${index})">-</button>
+                    <span style="margin: 0 6px; font-weight: bold;">${item.quantity}</span>
+                    <button class="btn-qty" onclick="window.increaseQuantity(${index})">+</button>
+                </td>
+                <td>${itemTotalWeight.toFixed(1)} g</td>
+                <td><button class="btn-remove" onclick="window.removePartFromManifest(${index})">Remove</button></td>
             `;
             manifestTbody.appendChild(tr);
         });
@@ -72,7 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addPartToManifest = function(name, weight) {
-        robotManifest.push({ name, weight });
+        const existingItem = robotManifest.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            robotManifest.push({ name, weight, quantity: 1 });
+        }
+        renderManifest();
+    };
+
+    window.increaseQuantity = function(index) {
+        robotManifest[index].quantity += 1;
+        renderManifest();
+    };
+
+    window.decreaseQuantity = function(index) {
+        if (robotManifest[index].quantity > 1) {
+            robotManifest[index].quantity -= 1;
+        } else {
+            robotManifest.splice(index, 1);
+        }
         renderManifest();
     };
 
@@ -100,5 +125,3 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 });
-
-
