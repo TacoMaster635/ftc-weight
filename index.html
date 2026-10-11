@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FTC Robot Weight & Part Library</title>
@@ -29,6 +29,11 @@
             <section class="library-section">
                 <h2>Part Library</h2>
                 <div class="library-controls">
+                    <div class="filter-buttons" style="margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="filter-btn active" data-filter="all">All Brands</button>
+                        <button class="filter-btn" data-filter="gobilda">goBILDA</button>
+                        <button class="filter-btn" data-filter="rev robotics">REV</button>
+                    </div>
                     <input type="text" id="search-input" placeholder="Search parts by name or type...">
                 </div>
                 <div class="table-responsive">
@@ -72,6 +77,8 @@
         </div>
     </div>
 
+    <!-- Load parts data first, then main script -->
+    <script src="parts.js"></script>
     <script src="script.js"></script>
 </body>
 
