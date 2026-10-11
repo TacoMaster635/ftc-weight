@@ -164,6 +164,21 @@ th {
     opacity: 0.9;
 }
 
+.btn-qty {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-qty:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
 .btn-remove {
     background-color: transparent;
     color: var(--danger-color);
