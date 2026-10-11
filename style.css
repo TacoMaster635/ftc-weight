@@ -78,6 +78,7 @@ header p {
 
 .main-layout {
     display: grid;
+    grid-template-columns: 2fr 1fr;
     gap: 20px;
 }
 
@@ -105,6 +106,29 @@ section h2 {
 
 .library-controls {
     margin-bottom: 15px;
+}
+
+.filter-btn {
+    background-color: #2a2a2a;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: #121212;
+    border-color: var(--primary-color);
 }
 
 input {
