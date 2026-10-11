@@ -6,22 +6,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const clearManifestBtn = document.getElementById('clear-manifest');
 
-    const goBILDAParts = [
-        { name: "goBILDA 5203 Series Yellow Jacket Motor", weight: 215.5, type: "Motor", manufacturer: "goBILDA" },
-        { name: "goBILDA 96mm Mecanum Wheel Set", weight: 440.0, type: "Drivetrain", manufacturer: "goBILDA" },
-        { name: "goBILDA Turret Bearing Assembly", weight: 180.0, type: "Turret", manufacturer: "goBILDA" },
-        { name: "goBILDA Dual High-Speed Launcher Flywheel", weight: 320.5, type: "Launcher", manufacturer: "goBILDA" },
-    ];
-    const REVParts = [
-        { name: "REV Control Hub", weight: 142.0, type: "Electronics", manufacturer: "REV Robotics" }
-    ];
-
-    const libraryParts = [...goBILDAParts, ...REVParts];
-
     let robotManifest = [];
+    let currentManufacturerFilter = 'all';
 
     renderLibrary(libraryParts);
     renderManifest();
+
+    // Filter button click logic
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            currentManufacturerFilter = e.target.getAttribute('data-filter');
+            applyFilters();
+        });
+    });
 
     function renderLibrary(partsToDisplay) {
         libraryTbody.innerHTML = '';
@@ -111,15 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderManifest();
     });
 
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        const filtered = libraryParts.filter(part => 
-            part.name.toLowerCase().includes(query) || 
-            part.type.toLowerCase().includes(query) ||
-            part.manufacturer.toLowerCase().includes(query)
-        );
+    function applyFilters() {
+        const query = searchInput.value.toLowerCase();
+        
+        const filtered = libraryParts.filter(part => {
+            const matchesSearch = part.name.toLowerCase().includes(query) || 
+                                  part.type.toLowerCase().includes(query) ||
+                                  part.manufacturer.toLowerCase().includes(query);
+                                  
+            const matchesManufacturer = currentManufacturerFilter === 'all' || 
+                                       part.manufacturer.toLowerCase().includes(currentManufacturerFilter);
+                                       
+            return matchesSearch && matchesManufacturer;
+        });
+        
         renderLibrary(filtered);
-    });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
 
     function escapeHtml(str) {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
